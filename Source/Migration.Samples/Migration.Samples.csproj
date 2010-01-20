@@ -47,9 +47,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateRolesTableAndRelationshipWithUsers.cs" />
+    <Compile Include="001_CreateUsersTable.cs" />
+    <Compile Include="002_CreateRolesTableAndRelationshipWithUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CreateUsersTable.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Machine.Migrations\Machine.Migrations.csproj">
