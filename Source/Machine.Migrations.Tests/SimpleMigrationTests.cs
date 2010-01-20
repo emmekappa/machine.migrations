@@ -32,7 +32,7 @@ namespace Machine.Migrations
   public class ConcreteSimpleMigration : SimpleMigration
   {
     public override void Up()
-    {
+    {				
     }
 
     public override void Down()

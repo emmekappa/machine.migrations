@@ -85,15 +85,14 @@ namespace Machine.Migrations
     public void Setup()
     {
       var migration = new ConcreteFluentMigration(x=>
-      {
+      {		  
         x.Schema.AlterTable("Company", t=>
         {
           t.AddColumn<string>("Name", 25);
           t.DropColumn("Foobar");
           t.RenameColumn("Blah", "Yadda");
         });
-      });
-
+      });		
       context = new MockMigrationContext();
       migration.Initialize(context);
 

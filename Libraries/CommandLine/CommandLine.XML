@@ -4,6 +4,11 @@
         <name>CommandLine</name>
     </assembly>
     <members>
+        <member name="T:CommandLine.CommandLineParserException">
+            <summary>
+            This exception is thrown when a generic parsing error occurs.
+            </summary>
+        </member>
         <member name="T:CommandLine.ValueListAttribute">
             <summary>
             Models a list of command line arguments that are not options.
@@ -39,7 +44,7 @@
         </member>
         <member name="P:CommandLine.BaseOptionAttribute.ShortName">
             <summary>
-            Short name of this command line option. This name is usually a single character.
+            Short name of this command line option. You can use only one character.
             </summary>
         </member>
         <member name="P:CommandLine.BaseOptionAttribute.LongName">
@@ -119,19 +124,6 @@
         <member name="P:CommandLine.OptionListAttribute.Separator">
             <summary>
             Gets or sets the values separator character.
-            </summary>
-        </member>
-        <member name="T:CommandLine.ParserException">
-            <summary>
-            This exception is thrown when a generic parsing error occurs.
-            </summary>
-        </member>
-        <member name="T:CommandLine.IncompatibleTypesException">
-            <summary>
-            Represents the exception that is thrown when an attempt to assign incopatible types.
-            This exception has only backward compatibility purpose, instead catch
-            <see cref="T:CommandLine.ParserException"/>.
-            The code will no more throw this type.
             </summary>
         </member>
         <member name="T:CommandLine.Text.CopyrightInfo">
@@ -282,9 +274,7 @@
         <member name="T:CommandLine.Text.HelpText">
             <summary>
             Models an help text and collects related informations.
-            You can assign it in place of a <see cref="T:System.String"/> instance, this is why
-            this type lacks a method to add lines after the options usage informations;
-            simple use a <see cref="T:System.Text.StringBuilder"/> or similar solutions.
+            You can assign it in place of a <see cref="T:System.String"/> instance.
             </summary>
         </member>
         <member name="M:CommandLine.Text.HelpText.#ctor(System.String)">
@@ -326,6 +316,16 @@
             <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="options"/> is null.</exception>
             <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="requiredWord"/> is null or empty string.</exception>
         </member>
+        <member name="M:CommandLine.Text.HelpText.AddOptions(System.Object,System.String,System.Int32)">
+            <summary>
+            Adds a text block with options usage informations.
+            </summary>
+            <param name="options">The instance that collected command line arguments parsed with the <see cref="!:CommandLine.Parser"/> class.</param>
+            <param name="requiredWord">The word to use when the option is required.</param>
+            <param name="maximumLength">The maximum length of the help documentation.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="options"/> is null.</exception>
+            <exception cref="T:System.ArgumentNullException">Thrown when parameter <paramref name="requiredWord"/> is null or empty string.</exception>
+        </member>
         <member name="M:CommandLine.Text.HelpText.ToString">
             <summary>
             Returns the help informations as a <see cref="T:System.String"/>.
@@ -343,6 +343,17 @@
             <summary>
             Sets the copyright information string.
             You can directly assign a <see cref="T:CommandLine.Text.CopyrightInfo"/> instance.
+            </summary>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.MaximumDisplayWidth">
+            <summary>
+            Gets or sets the maximum width of the display.  This determines word wrap when displaying the text.
+            </summary>
+            <value>The maximum width of the display.</value>
+        </member>
+        <member name="P:CommandLine.Text.HelpText.AdditionalNewLineAfterOption">
+            <summary>
+            Gets or sets whether to add an additional line after the description of the option.
             </summary>
         </member>
         <member name="T:CommandLine.Text.HeadingInfo">
@@ -406,6 +417,18 @@
             </summary>
             <param name="message">The <see cref="T:System.String"/> message to write.</param>
             <exception cref="T:System.ArgumentException">Thrown when parameter <paramref name="message"/> is null or empty string.</exception>
+        </member>
+        <member name="T:CommandLine.OptionArrayAttribute">
+            <summary>
+            Models an option that can accept multiple values as separated arguments.
+            </summary>
+        </member>
+        <member name="M:CommandLine.OptionArrayAttribute.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CommandLine.OptionArrayAttribute"/> class.
+            </summary>
+            <param name="shortName">The short name of the option or null if not used.</param>
+            <param name="longName">The long name of the option or null if not used.</param>
         </member>
         <member name="T:CommandLine.CommandLineParserSettings">
             <summary>

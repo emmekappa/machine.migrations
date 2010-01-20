@@ -17,7 +17,7 @@ namespace Machine.Migrations
     public void Equals_SameReference_SameReverting_IsTrue()
     {
       _step1 = new MigrationStep(_reference1, true);
-      _step2 = new MigrationStep(_reference1, true);
+      _step2 = new MigrationStep(_reference1, true);		
       Assert.IsTrue(_step1.Equals(_step2));
     }
 

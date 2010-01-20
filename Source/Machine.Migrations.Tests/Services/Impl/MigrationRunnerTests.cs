@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-
+using System.Linq;
 using Machine.Core;
 
 using NUnit.Framework;
@@ -122,5 +122,34 @@ namespace Machine.Migrations.Services.Impl
       _target.Migrate(_steps);
       _mocks.VerifyAll();
     }
+
+	[Test]
+	public void Migrate_Asd()
+	{
+		_steps.Clear();
+		_steps = new Dictionary<string, List<MigrationStep>>();
+		_steps[string.Empty] = new List<MigrationStep>();
+		_steps[string.Empty].Add(new MigrationStep(new MigrationReference(0, "A", "001_A"), true));
+		var migration1 = MockRepository.GenerateStub<IDatabaseMigration>();
+		_steps[string.Empty][0].DatabaseMigration = migration1;
+		_steps[string.Empty].Add(new MigrationStep(new MigrationReference(1, "B", "002_B"), true));
+		var migration2 = MockRepository.GenerateStub<IDatabaseMigration>();
+		_steps[string.Empty][1].DatabaseMigration = migration2;
+
+		using (_mocks.Record())
+		{
+			SetupResult.For(_configuration.ShowDiagnostics).Return(false);
+		}
+
+		_target.Migrate(_steps);
+
+		using (_mocks.Ordered())
+		{
+			migration1.AssertWasCalled(x => x.Down());
+			migration2.AssertWasCalled(x => x.Down());
+		}
+
+		_mocks.VerifyAll();
+	}
   }
 }

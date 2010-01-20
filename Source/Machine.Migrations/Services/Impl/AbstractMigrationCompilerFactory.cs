@@ -12,7 +12,7 @@ namespace Machine.Migrations.Services.Impl
       if (instance == null)
       {
         throw new ArgumentException(type + " should be a " + typeof(IDatabaseMigration));
-      }
+      }		
       return instance;
     }
 

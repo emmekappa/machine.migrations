@@ -32,7 +32,7 @@ namespace Machine.Migrations.ConsoleRunner
     [OptionList("r", "references", HelpText="Assemblies to reference while building migrations separated by commas", Separator = ',')]
     public List<string> References = new List<string>();
 
-    [Option("t", "timeout", HelpText = "Default command timeout for migrations")]
+    [Option(null, "timeout", HelpText = "Default command timeout for migrations")]
     public int CommandTimeout = 60;
 
     [HelpOption("?", "help", HelpText = "Display this help screen")]
@@ -46,8 +46,7 @@ namespace Machine.Migrations.ConsoleRunner
 
     public virtual bool ParseArguments(string[] args)
     {
-      var parser = new CommandLineParser();
-
+      var parser = new CommandLineParser();		
       return parser.ParseArguments(args, this, Console.Error);
     }
 

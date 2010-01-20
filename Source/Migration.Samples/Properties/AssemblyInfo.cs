@@ -1,29 +1,26 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-
-[assembly : AssemblyTitle("Machine.Migrations.NHibernate")]
-[assembly : AssemblyDescription("")]
-[assembly : AssemblyConfiguration("")]
-[assembly : AssemblyCompany("N/A")]
-[assembly : AssemblyProduct("Machine.Migrations.NHibernate")]
-[assembly : AssemblyCopyright("Copyright � N/A 2008")]
-[assembly : AssemblyTrademark("")]
-[assembly : AssemblyCulture("")]
+[assembly: AssemblyTitle("Migration.Samples")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyProduct("Migration.Samples")]
+[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
-
-[assembly : ComVisible(false)]
+[assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-
-[assembly : Guid("935874a1-1ef2-4cdd-917d-9e6646d33457")]
+[assembly: Guid("2b987565-e07e-4fc5-85b6-4ece6b90952d")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -35,6 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-
-[assembly : AssemblyVersion("1.0.0.0")]
-[assembly : AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

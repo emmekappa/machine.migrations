@@ -5,19 +5,21 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{43C353D2-018D-4FDF-ADF0-1E3282973810}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{CE7B62D8-321A-4797-A828-0768D4930474}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Machine.Migrations.ConsoleRunner</RootNamespace>
-    <AssemblyName>migrate</AssemblyName>
+    <RootNamespace>Migration.Samples</RootNamespace>
+    <AssemblyName>Migration.Samples</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Build\Debug\Migrations\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -25,16 +27,12 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Build\Release\Migrations\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Libraries\Logging\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -49,15 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Options.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="CreateRolesTableAndRelationshipWithUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CreateUsersTable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\libcmdline\CommandLine.csproj">
-      <Project>{5DEA2811-2FFA-4959-830B-CAD3ACACABEB}</Project>
-      <Name>CommandLine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Machine.Migrations\Machine.Migrations.csproj">
       <Project>{03796A8D-51A4-4308-A706-D27960E59896}</Project>
       <Name>Machine.Migrations</Name>
