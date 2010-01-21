@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine, Version=1.7.10.5, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\CommandLine\CommandLine.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Libraries\Logging\log4net.dll</HintPath>
@@ -54,10 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\libcmdline\CommandLine.csproj">
-      <Project>{5DEA2811-2FFA-4959-830B-CAD3ACACABEB}</Project>
-      <Name>CommandLine</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Machine.Migrations\Machine.Migrations.csproj">
       <Project>{03796A8D-51A4-4308-A706-D27960E59896}</Project>
       <Name>Machine.Migrations</Name>
