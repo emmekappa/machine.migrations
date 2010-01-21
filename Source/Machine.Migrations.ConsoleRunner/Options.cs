@@ -35,7 +35,10 @@ namespace Machine.Migrations.ConsoleRunner
     [Option(null, "timeout", HelpText = "Default command timeout for migrations")]
     public int CommandTimeout = 60;
 
-    [HelpOption("?", "help", HelpText = "Display this help screen")]
+	[Option(null, "database", HelpText = "Database type to use \"SqlServer\" or \"Oracle\"")]
+  	public string Database = "SqlServer";  	
+
+  	[HelpOption("?", "help", HelpText = "Display this help screen")]
     public string GetUsage()
     {
       HelpText help = new HelpText(@"Machine.Migrations");

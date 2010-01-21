@@ -12,16 +12,16 @@ using Rhino.Mocks;
 namespace Machine.Migrations.Services.Impl
 {
   [TestFixture]
-  public class SchemaStateManagerTests : StandardFixture<SchemaStateManager>
+  public class SqlSchemaStateManagerTests : StandardFixture<SqlServerSchemaStateManager>
   {
     IDatabaseProvider _databaseProvider;
     ISchemaProvider _schemaProvider;
 
-    public override SchemaStateManager Create()
+    public override SqlServerSchemaStateManager Create()
     {
       _databaseProvider = _mocks.StrictMock<IDatabaseProvider>();
       _schemaProvider = _mocks.DynamicMock<ISchemaProvider>();
-      return new SchemaStateManager(_databaseProvider, _schemaProvider);
+      return new SqlServerSchemaStateManager(_databaseProvider, _schemaProvider);
     }
 
     [Test]

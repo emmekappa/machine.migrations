@@ -78,7 +78,7 @@
     <Compile Include="Services\Impl\MigrationRunnerTests.cs" />
     <Compile Include="Services\Impl\MigrationSelectorTests.cs" />
     <Compile Include="Services\Impl\MigratorTests.cs" />
-    <Compile Include="Services\Impl\SchemaStateManagerTests.cs" />
+    <Compile Include="Services\Impl\SqlSchemaStateManagerTests.cs" />
     <Compile Include="Services\Impl\SqlScriptMigrationFactoryTests.cs" />
     <Compile Include="Services\Impl\VersionStateFactoryTests.cs" />
     <Compile Include="Services\Impl\WorkingDirectoryManagerTests.cs" />

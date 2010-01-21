@@ -11,6 +11,7 @@ namespace Machine.Migrations.Services.Impl
     Type _connectionProviderType = typeof(SqlServerConnectionProvider);
     Type _schemaProviderType = typeof(SqlServerSchemaProvider);
     Type _databaseProviderType = typeof(SqlServerDatabaseProvider);
+  	Type _schemaStateManager = typeof (SqlServerSchemaStateManager);
     string _connectionString;
     string _migrationsDirectory;
     string _scope;
@@ -87,7 +88,12 @@ namespace Machine.Migrations.Services.Impl
       set { _compilerVersion = value; }
     }
 
-    public string ConnectionStringByKey(string key)
+  	public Type SchemaStateManager
+  	{
+		get { return _schemaStateManager; }
+  	}
+
+  	public string ConnectionStringByKey(string key)
     {
       return _connectionString;
     }

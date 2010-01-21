@@ -20,7 +20,7 @@ namespace Machine.Migrations.Services.Impl
       container.Register.Type(configuration.SchemaProviderType);
       container.Register.Type<FileSystem>();
       container.Register.Type<Namer>();
-      container.Register.Type<SchemaStateManager>();
+	  container.Register.Type(configuration.SchemaStateManager);
       container.Register.Type<MigrationFinder>();
       container.Register.Type<MigrationSelector>();
       container.Register.Type<MigrationRunner>();

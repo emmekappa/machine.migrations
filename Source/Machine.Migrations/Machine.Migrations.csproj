@@ -65,6 +65,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +83,7 @@
     <Compile Include="Builders\TableMutator.cs" />
     <Compile Include="Column.cs" />
     <Compile Include="DatabaseProviders\IDatabaseProvider.cs" />
+    <Compile Include="DatabaseProviders\OracleDatabaseProvider.cs" />
     <Compile Include="DatabaseProviders\SqlServerDatabaseProvider.cs" />
     <Compile Include="DuplicateMigrationVersionException.cs" />
     <Compile Include="FluentMigration.cs" />
@@ -93,6 +95,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SchemaProviders\FluentSchemaProvider.cs" />
     <Compile Include="SchemaProviders\IFluentSchemaProvider.cs" />
+    <Compile Include="SchemaProviders\OracleSchemaProvider.cs" />
+    <Compile Include="Builders\Query.cs" />
     <Compile Include="SchemaProviders\SqlServerCeSchemaProvider.cs" />
     <Compile Include="Services\ICommonTransformations.cs" />
     <Compile Include="Services\IConfiguration.cs" />
@@ -105,9 +109,12 @@
     <Compile Include="Services\IMigrationSelector.cs" />
     <Compile Include="Services\IMigratorContainerFactory.cs" />
     <Compile Include="Services\Impl\AbstractConnectionProvider.cs" />
+    <Compile Include="Services\Impl\AbstractSchemaStateManager.cs" />
     <Compile Include="Services\Impl\ActivatorBasedMigrationFactoryChooser.cs" />
     <Compile Include="Services\Impl\AssemblyMigrationFinder.cs" />
     <Compile Include="Services\Impl\MigratorContainerFactory.cs" />
+    <Compile Include="Services\Impl\OracleConnectionProvider.cs" />
+    <Compile Include="Services\Impl\OracleSchemaStateManager.cs" />
     <Compile Include="Services\Impl\SqlScriptMigrationFactory.cs" />
     <Compile Include="Services\Impl\StaticMigratorConfiguration.cs" />
     <Compile Include="Services\ITransactionProvider.cs" />
@@ -124,7 +131,7 @@
     <Compile Include="Services\Impl\MigrationSelector.cs" />
     <Compile Include="Services\Impl\TransactionProvider.cs" />
     <Compile Include="Services\Impl\Migrator.cs" />
-    <Compile Include="Services\Impl\SchemaStateManager.cs" />
+    <Compile Include="Services\Impl\SqlServerSchemaStateManager.cs" />
     <Compile Include="Services\Impl\VersionStateFactory.cs" />
     <Compile Include="Services\Impl\WorkingDirectoryManager.cs" />
     <Compile Include="Services\ISchemaStateManager.cs" />

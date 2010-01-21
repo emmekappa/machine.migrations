@@ -125,7 +125,12 @@ namespace Machine.Migrations
       set { _commandTimeout = value; }
     }
 
-    public void SetCommandTimeout(int commandTimeout)
+  	public Type SchemaStateManager
+  	{
+		get { return typeof (SqlServerSchemaStateManager); }  		
+  	}
+
+  	public void SetCommandTimeout(int commandTimeout)
     {
       this.CommandTimeout = commandTimeout;
     }

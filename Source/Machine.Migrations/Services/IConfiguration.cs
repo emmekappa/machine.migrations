@@ -2,39 +2,38 @@
 
 namespace Machine.Migrations.Services
 {
-  public interface IConfiguration
-  {
-    string Scope { get; }
+	public interface IConfiguration
+	{
+		string Scope { get; }
 
-    Type ConnectionProviderType { get; }
+		Type ConnectionProviderType { get; }
 
-    Type TransactionProviderType { get; }
+		Type TransactionProviderType { get; }
 
-    Type SchemaProviderType { get; }
+		Type SchemaProviderType { get; }
 
-    Type DatabaseProviderType { get; }
+		Type DatabaseProviderType { get; }
 
-    string ConnectionStringByKey(string key);
+		string ConnectionString { get; }
 
-    string ConnectionString
-    {
-      get;
-    }
+		string ActiveConfigurationKey { get; set; }
 
-    string ActiveConfigurationKey { get; set; }
+		string MigrationsDirectory { get; }
 
-    string MigrationsDirectory { get; }
+		string CompilerVersion { get; }
 
-    string CompilerVersion { get; }
+		long DesiredVersion { get; }
 
-    long DesiredVersion { get; }
+		bool ShowDiagnostics { get; }
 
-    bool ShowDiagnostics { get; }
+		string[] References { get; }
 
-    string[] References { get; }
+		int CommandTimeout { get; }
 
-    int CommandTimeout { get; }
+		Type SchemaStateManager { get; }
 
-    void SetCommandTimeout(int commandTimeout);
-  }
+		string ConnectionStringByKey(string key);
+
+		void SetCommandTimeout(int commandTimeout);
+	}
 }

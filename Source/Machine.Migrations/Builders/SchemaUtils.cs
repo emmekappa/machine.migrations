@@ -4,7 +4,7 @@ namespace Machine.Migrations.Builders
   {
     public static string Normalize(string content)
     {
-      return content.ToUpper().
+      return content.
         Replace(".", "_").
         Replace("[", "").
         Replace("]", "").
