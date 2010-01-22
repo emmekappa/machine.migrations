@@ -23,7 +23,7 @@ namespace Machine.Migrations.SchemaProviders
       return null;
     }
 
-    public override string ToMsSqlType(ColumnType type, int size)
+	public override string ToDataBaseType(ColumnType type, int size)
     {
       if (type == ColumnType.Binary)
       {
@@ -39,7 +39,7 @@ namespace Machine.Migrations.SchemaProviders
         return String.Format("NVARCHAR({0})", size);
       }
 
-      return base.ToMsSqlType(type, size);
+	  return base.ToDataBaseType(type, size);
     }
     #endregion
   }

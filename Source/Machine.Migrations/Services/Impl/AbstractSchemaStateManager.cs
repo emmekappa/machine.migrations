@@ -31,9 +31,9 @@ namespace Machine.Migrations.Services.Impl
 					_schemaProvider.AddColumn(TableName, ScopeColumnName, typeof(string), 25, false, true);
 				}
 
-				if (!_schemaProvider.IsColumnOfType(TableName, VersionColumnName, "bigint"))
+				if (!_schemaProvider.IsColumnOfType(TableName, VersionColumnName, VersionColumnType))
 				{
-					_log.InfoFormat("Changing {0} column to {1}...", VersionColumnName, "bigint");
+					_log.InfoFormat("Changing {0} column to {1}...", VersionColumnName, VersionColumnType);
 					_schemaProvider.ChangeColumn(TableName, VersionColumnName, typeof(Int64), 8, false);
 				}
 
@@ -51,7 +51,11 @@ namespace Machine.Migrations.Services.Impl
 			_schemaProvider.AddTable(TableName, columns);
 		}
 
+		protected abstract string VersionColumnType { get; }
+
 		public abstract IEnumerable<long> GetAppliedMigrationVersions(string scope);
+
+		public abstract void SetMigrationVersionApplied(long version, string scope);
 
 		public void SetMigrationVersionUnapplied(long version, string scope)
 		{
@@ -64,20 +68,6 @@ namespace Machine.Migrations.Services.Impl
 			{
 				_databaseProvider.ExecuteNonQuery("DELETE FROM {0} WHERE {1} = {2} AND {3} = '{4}'",
 				                                  TableName, VersionColumnName, version, ScopeColumnName, scope);
-			}
-		}
-
-		public void SetMigrationVersionApplied(long version, string scope)
-		{
-			if (string.IsNullOrEmpty(scope))
-			{
-				_databaseProvider.ExecuteNonQuery("INSERT INTO {0} ({1}, {2}) VALUES ({3}, NULL)",
-				                                  TableName, VersionColumnName, ScopeColumnName, version);
-			}
-			else
-			{
-				_databaseProvider.ExecuteNonQuery("INSERT INTO {0} ({1}, {2}) VALUES ({3}, '{4}')",
-				                                  TableName, VersionColumnName, ScopeColumnName, version, scope);
 			}
 		}
 	}

@@ -96,7 +96,6 @@
     <Compile Include="SchemaProviders\FluentSchemaProvider.cs" />
     <Compile Include="SchemaProviders\IFluentSchemaProvider.cs" />
     <Compile Include="SchemaProviders\OracleSchemaProvider.cs" />
-    <Compile Include="Builders\Query.cs" />
     <Compile Include="SchemaProviders\SqlServerCeSchemaProvider.cs" />
     <Compile Include="Services\ICommonTransformations.cs" />
     <Compile Include="Services\IConfiguration.cs" />

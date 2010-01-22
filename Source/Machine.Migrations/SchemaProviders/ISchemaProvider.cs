@@ -26,5 +26,6 @@ namespace Machine.Migrations.SchemaProviders
     void AddUniqueConstraint(string table, string name, params string[] columns);
     void DropConstraint(string table, string name);
     bool IsColumnOfType(string table, string column, string type);
+  	string ToDataBaseType(ColumnType type, int size);
   }
 }

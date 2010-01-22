@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using Machine.Core.LoggingUtilities;
 using Machine.Migrations.Builders;
@@ -45,7 +46,7 @@ namespace Machine.Migrations.SchemaProviders
 			using (Log4NetNdc.Push("AddTable"))
 			{
 				var sb = new StringBuilder();				
-				sb.Append(Query.Format("CREATE TABLE {0}", table)).Append(" (");
+				sb.Append(Format("CREATE TABLE {0}", table)).Append(" (");
 				bool first = true;
 				foreach (Column column in columns)
 				{
@@ -139,9 +140,9 @@ namespace Machine.Migrations.SchemaProviders
 			using (Log4NetNdc.Push("HasColumn({0}.{1})", table, column))
 			{
 				return
-					_databaseProvider.ExecuteScalar<Int32>(
-						"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}' AND COLUMN_NAME = '{1}'", table,
-						column) > 0;
+					_databaseProvider.ExecuteScalar<Decimal>(
+						"SELECT COUNT(*) FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{0}' AND COLUMN_NAME = '{1}'", 
+						table, column) > 0;
 			}
 		}
 
@@ -150,16 +151,15 @@ namespace Machine.Migrations.SchemaProviders
 			using (Log4NetNdc.Push("IsColumnOfType({0}.{1}.{2})", table, column, type))
 			{
 				return
-					_databaseProvider.ExecuteScalar<Int32>(
-						"SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{0}' AND COLUMN_NAME = '{1}' AND DATA_TYPE = '{2}'",
-						table,
-						column, type) > 0;
+					_databaseProvider.ExecuteScalar<Decimal>(
+						"SELECT COUNT(*) FROM USER_TAB_COLUMNS WHERE TABLE_NAME = '{0}' AND COLUMN_NAME = '{1}' AND DATA_TYPE = '{2}'", table, column, type)
+						> 0;
 			}
 		}
 
 		public void ChangeColumn(string table, string column, Type type, short size, bool allowNull)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} ALTER COLUMN {1}", table,
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" MODIFY {1}", table,
 			                                  ColumnToCreateTableSql(new Column(column, type, size, false, allowNull)));
 		}
 
@@ -230,7 +230,7 @@ namespace Machine.Migrations.SchemaProviders
 		{
 			return String.Format("\"{0}\" {1} {2}",
 			                     column.Name,
-			                     toOracleType(column.ColumnType, column.Size),
+			                     ToDataBaseType(column.ColumnType, column.Size),
 			                     column.AllowNull ? "" : "NOT NULL ENABLE");
 		}
 
@@ -249,7 +249,7 @@ namespace Machine.Migrations.SchemaProviders
 			return null;
 		}
 
-		protected virtual string toOracleType(ColumnType type, int size)
+		public virtual string ToDataBaseType(ColumnType type, int size)
 		{
 			switch (type)
 			{
@@ -290,5 +290,16 @@ namespace Machine.Migrations.SchemaProviders
 		}
 
 		#endregion
+
+		public string Escape(string name)
+		{
+			return "\"" + name.Trim('\"') + "\"";
+		}
+
+		public string Format(string format, params object[] objects)
+		{
+			string[] values = objects.Select(x => "\"" + x.ToString() + "\"").ToArray();
+			return string.Format(format, values);
+		}
 	}
 }

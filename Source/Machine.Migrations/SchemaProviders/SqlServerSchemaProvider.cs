@@ -226,7 +226,7 @@ namespace Machine.Migrations.SchemaProviders
     {
       return String.Format("\"{0}\" {1} {2} {3}",
         column.Name,
-        ToMsSqlType(column.ColumnType, column.Size),
+		ToDataBaseType(column.ColumnType, column.Size),
         column.AllowNull ? "" : "NOT NULL",
         column.IsIdentity ? "IDENTITY(1, 1)" : "").Trim();
     }
@@ -246,7 +246,7 @@ namespace Machine.Migrations.SchemaProviders
       return null;
     }
 
-    public virtual string ToMsSqlType(ColumnType type, int size)
+	public virtual string ToDataBaseType(ColumnType type, int size)
     {
       switch (type)
       {

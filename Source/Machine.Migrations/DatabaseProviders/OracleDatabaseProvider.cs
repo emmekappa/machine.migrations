@@ -75,7 +75,7 @@ namespace Machine.Migrations.DatabaseProviders
 				var values = new List<T>();
 				while (reader.Read())
 				{
-					values.Add((T) reader.GetValue(0));
+					values.Add((T)Convert.ChangeType(reader.GetValue(0), typeof(T)));
 				}
 				reader.Close();
 				return values.ToArray();
