@@ -84,7 +84,7 @@ namespace Machine.Migrations.SchemaProviders
       {
         SetupResult.For(
           _databaseProvider.ExecuteNonQuery(
-            "CREATE TABLE TheTable (\r\n\"Id\" INT NOT NULL,\r\nCONSTRAINT PK_THETABLE_ID PRIMARY KEY CLUSTERED (\"ID\")\r\n)"))
+			"CREATE TABLE TheTable (\r\n\"Id\" INT NOT NULL,\r\nCONSTRAINT PK_TheTable_Id PRIMARY KEY CLUSTERED (\"Id\")\r\n)"))
           .Return(true);
       }
       Column[] columns = new Column[]
@@ -101,7 +101,7 @@ namespace Machine.Migrations.SchemaProviders
       {
         SetupResult.For(
           _databaseProvider.ExecuteNonQuery(
-            "CREATE TABLE TheTable (\r\n\"Id\" INT NOT NULL IDENTITY(1, 1),\r\nCONSTRAINT PK_THETABLE_ID PRIMARY KEY CLUSTERED (\"ID\")\r\n)"))
+			"CREATE TABLE TheTable (\r\n\"Id\" INT NOT NULL IDENTITY(1, 1),\r\nCONSTRAINT PK_TheTable_Id PRIMARY KEY CLUSTERED (\"Id\")\r\n)"))
           .Return(true);
       }
       Column[] columns = new Column[]
@@ -118,7 +118,7 @@ namespace Machine.Migrations.SchemaProviders
       {
         SetupResult.For(_databaseProvider.ExecuteNonQuery("CREATE TABLE TheTable " +
           "(\r\n\"Id\" INT NOT NULL,\r\n\"Name\" NVARCHAR(150) NOT NULL,\r\n" +
-            "CONSTRAINT PK_THETABLE_ID PRIMARY KEY CLUSTERED (\"ID\")\r\n)")).Return(true);
+			"CONSTRAINT PK_TheTable_Id PRIMARY KEY CLUSTERED (\"Id\")\r\n)")).Return(true);
       }
       Column[] columns = new Column[]
       {
@@ -135,7 +135,7 @@ namespace Machine.Migrations.SchemaProviders
       {
         SetupResult.For(_databaseProvider.ExecuteNonQuery("CREATE TABLE TheTable " +
           "(\r\n\"Id\" INT NOT NULL,\r\n\"Name\" NVARCHAR(100) NOT NULL,\r\n" +
-            "CONSTRAINT PK_THETABLE_ID PRIMARY KEY CLUSTERED (\"ID\")\r\n)")).Return(true);
+			"CONSTRAINT PK_TheTable_Id PRIMARY KEY CLUSTERED (\"Id\")\r\n)")).Return(true);
       }
       Column[] columns = new Column[]
       {
