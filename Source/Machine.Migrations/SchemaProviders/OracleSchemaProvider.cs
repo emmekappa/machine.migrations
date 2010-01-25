@@ -118,12 +118,12 @@ namespace Machine.Migrations.SchemaProviders
 
 		public void RenameTable(string table, string newName)
 		{
-			_databaseProvider.ExecuteNonQuery("EXEC sp_rename '{0}', '{1}'", table, newName);
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" RENAME TO \"{1}\"", table, newName);
 		}
 
 		public void RenameColumn(string table, string column, string newName)
 		{
-			_databaseProvider.ExecuteNonQuery("EXEC sp_rename '{0}.{1}', '{2}', 'COLUMN'", table, column, newName);
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" RENAME COLUMN \"{1}\" TO \"{2}\"", table, column, newName);
 		}
 
 		public void AddSchema(string schemaName)
