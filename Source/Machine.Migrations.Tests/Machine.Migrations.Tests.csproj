@@ -68,6 +68,7 @@
     <Compile Include="MigrationStepTests.cs" />
     <Compile Include="MockMigrationContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchemaProviders\OracleSchemaProviderTests.cs" />
     <Compile Include="SchemaProviders\SqlServerSchemaProviderTests.cs" />
     <Compile Include="Services\Impl\CommonTransformationsTests.cs" />
     <Compile Include="Services\Impl\ConnectionProviderTests.cs" />
