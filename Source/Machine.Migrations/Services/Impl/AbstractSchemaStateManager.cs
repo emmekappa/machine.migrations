@@ -61,12 +61,12 @@ namespace Machine.Migrations.Services.Impl
 		{
 			if (string.IsNullOrEmpty(scope))
 			{
-				_databaseProvider.ExecuteNonQuery("DELETE FROM {0} WHERE {1} = {2} AND {3} IS NULL",
+				_databaseProvider.ExecuteNonQuery("DELETE FROM \"{0}\" WHERE \"{1}\" = {2} AND \"{3}\" IS NULL",
 				                                  TableName, VersionColumnName, version, ScopeColumnName);
 			}
 			else
 			{
-				_databaseProvider.ExecuteNonQuery("DELETE FROM {0} WHERE {1} = {2} AND {3} = '{4}'",
+				_databaseProvider.ExecuteNonQuery("DELETE FROM \"{0}\" WHERE \"{1}\" = {2} AND \"{3}\" = '{4}'",
 				                                  TableName, VersionColumnName, version, ScopeColumnName, scope);
 			}
 		}

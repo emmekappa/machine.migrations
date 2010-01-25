@@ -25,7 +25,7 @@ namespace Machine.Migrations.Services.Impl
 			CheckSchemaInfoTable();
 
 			if( _databaseProvider.ExecuteScalar<Decimal>("SELECT COUNT(*) FROM SEQ WHERE SEQUENCE_NAME = '{0}'", _sequenceName) == 0)
-                _databaseProvider.ExecuteNonQuery("CREATE SEQUENCE {0} MINVALUE 1 START WITH 1 INCREMENT BY 1;", _sequenceName);
+                _databaseProvider.ExecuteNonQuery("CREATE SEQUENCE {0} MINVALUE 1 START WITH 1 INCREMENT BY 1", _sequenceName);
 
 			if (string.IsNullOrEmpty(scope))
 			{
