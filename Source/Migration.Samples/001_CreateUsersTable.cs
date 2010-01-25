@@ -6,7 +6,9 @@ public class CreateUsersTable : FluentMigration
 	{
 		Schema.CreateTable("Users", builder =>
 		                            	{
-		                            		builder.AddPrimaryKey<int>("Id").Identity();
+											//builder.AddPrimaryKey<int>("Id").Identity();
+											//builder.AddPrimaryKey<int>("Id").Sequence("hibernate_sequence");
+											builder.AddPrimaryKey<int>("Id").Native();
 		                            		builder.AddColumn<string>("Name");
 		                            	});
 	}

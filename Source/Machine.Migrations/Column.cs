@@ -30,7 +30,10 @@ namespace Machine.Migrations
     bool _isPrimaryKey;
     bool _allowNull;
     bool _isIdentity;
-    bool _isUnique;
+	bool _isUnique;
+	bool _isSequence;
+	string _sequenceName;
+	bool _isNative;
 
     public string Name
     {
@@ -61,6 +64,24 @@ namespace Machine.Migrations
       get { return _isIdentity; }
       set { _isIdentity = value; }
     }
+
+	public bool IsSequence
+	{
+		get { return _isSequence; }
+		set { _isSequence = value; }
+	}
+
+	public string SequenceName
+	{
+		get { return _sequenceName; }
+		set { _sequenceName = value; }
+	}
+
+	public bool IsNative
+	{
+		get { return _isNative; }
+		set { _isNative = value; }
+	}
 
     public bool IsUnique
     {

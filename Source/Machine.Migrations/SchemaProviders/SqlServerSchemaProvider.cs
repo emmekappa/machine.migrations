@@ -224,11 +224,14 @@ namespace Machine.Migrations.SchemaProviders
 
     public virtual string ColumnToCreateTableSql(Column column)
     {
+	  if (column.IsSequence)
+		throw new NotSupportedException("IsSequence not supported");
+
       return String.Format("\"{0}\" {1} {2} {3}",
         column.Name,
 		ToDataBaseType(column.ColumnType, column.Size),
         column.AllowNull ? "" : "NOT NULL",
-        column.IsIdentity ? "IDENTITY(1, 1)" : "").Trim();
+        column.IsIdentity || column.IsNative ? "IDENTITY(1, 1)" : "").Trim();
     }
 
     public virtual string ColumnToConstraintsSql(string tableName, Column column)

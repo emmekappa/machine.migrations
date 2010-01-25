@@ -12,7 +12,10 @@ namespace Machine.Migrations.Builders
     protected ColumnType? colType;
     protected short? size;
     protected bool? nullable;
-    protected bool? identity;
+	protected bool? identity;
+	protected bool? sequence;
+	protected string sequenceName;
+	protected bool? native;
     protected bool? unique;
 
     protected ColumnBuilder(string name)
@@ -67,6 +70,19 @@ namespace Machine.Migrations.Builders
       return this;
     }
 
+	public IColumnBuilder Sequence(string sequenceName)
+	{
+		sequence = true;
+		this.sequenceName = sequenceName;
+		return this;
+	}
+
+	public IColumnBuilder Native()
+	{
+		native = true;
+		return this;
+	}
+
     public IColumnBuilder Nullable()
     {
       nullable = true;
@@ -108,6 +124,15 @@ namespace Machine.Migrations.Builders
       {
         col.IsIdentity = identity.Value;
       }
+      if(sequence.HasValue)
+      {
+      	col.IsSequence = sequence.Value;
+      	col.SequenceName = sequenceName;
+      }
+	  if (native.HasValue)
+	  {
+		  col.IsNative = native.Value;
+	  }
       if (unique.HasValue)
       {
         col.IsUnique = unique.Value;
