@@ -66,7 +66,7 @@ namespace Machine.Migrations.SchemaProviders
 						if (sequenceName.Length > 30)
 							sequenceName = sequenceName.Substring(0, 29);
 						if (_databaseProvider.ExecuteScalar<Decimal>("SELECT COUNT(*) FROM SEQ WHERE SEQUENCE_NAME = '{0}'", sequenceName) == 0)
-							_databaseProvider.ExecuteNonQuery("CREATE SEQUENCE {0} MINVALUE 1 START WITH 1 INCREMENT BY 1", sequenceName);
+							_databaseProvider.ExecuteNonQuery("CREATE SEQUENCE \"{0}\" MINVALUE 1 START WITH 1 INCREMENT BY 1", sequenceName);
 					}
 
 					string sql = ColumnToConstraintsSql(table, column);

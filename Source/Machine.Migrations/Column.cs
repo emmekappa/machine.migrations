@@ -159,7 +159,7 @@ namespace Machine.Migrations
       _size = size;
       _isPrimaryKey = isPrimaryKey;
       if (_isPrimaryKey)
-        _isIdentity = true;
+        _isNative = true;
       _allowNull = allowNull;
       _columnType = type;
     }
