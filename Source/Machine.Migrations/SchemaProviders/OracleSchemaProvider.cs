@@ -91,7 +91,7 @@ namespace Machine.Migrations.SchemaProviders
 
 		public void AddColumn(string table, string column, Type type, short size, bool isPrimaryKey, bool allowNull)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} ADD {1}", table,
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" ADD {1}", table,
 			                                  ColumnToCreateTableSql(new Column(column, type, size, isPrimaryKey, allowNull)));
 		}
 
@@ -186,7 +186,7 @@ namespace Machine.Migrations.SchemaProviders
 		                                    string foreignColumn)
 		{
 			_databaseProvider.ExecuteNonQuery(
-				"ALTER TABLE {0} ADD CONSTRAINT \"{1}\" FOREIGN KEY (\"{2}\") REFERENCES {3} (\"{4}\")", table, name, column,
+				"ALTER TABLE \"{0}\" ADD CONSTRAINT \"{1}\" FOREIGN KEY (\"{2}\") REFERENCES \"{3}\" (\"{4}\")", table, name, column,
 				foreignTable, foreignColumn);
 		}
 
@@ -204,12 +204,12 @@ namespace Machine.Migrations.SchemaProviders
 			}
 
 			_databaseProvider.ExecuteNonQuery(
-				"ALTER TABLE {0} ADD CONSTRAINT \"{1}\" UNIQUE NONCLUSTERED ({2})", table, name, colList);
+				"ALTER TABLE \"{0}\" ADD CONSTRAINT \"{1}\" UNIQUE NONCLUSTERED ({2})", table, name, colList);
 		}
 
 		public void DropConstraint(string table, string name)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP CONSTRAINT \"{1}\"", table, name);
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" DROP CONSTRAINT \"{1}\"", table, name);
 		}
 
 		#endregion
