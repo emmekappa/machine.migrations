@@ -12,7 +12,6 @@ public class CreateRolesTableAndRelationshipWithUsers : FluentMigration
 		                            	});
 		SimpleSchema.AddColumn("Users", "RoleId", typeof (Guid), true);
 		SimpleSchema.AddForeignKeyConstraint("Users", "FK_Users_Roles", "RoleId", "Roles", "Id");
-		Database.ExecuteNonQuery("INSERT INTO Users (Name) VALUES ('{0}')", new[] {"Admin"});
 		//Schema.AlterTable("Users", builder => builder.AddColumn<string>("RoleId"));
 		//Schema.AlterTable("Users", builder => builder.AddForeignKey("RoleId",
 		//                                                            new TableInfo("Roles", "Id", ColumnType.Guid, null)));

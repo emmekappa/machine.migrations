@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -49,6 +50,7 @@
   <ItemGroup>
     <Compile Include="001_CreateUsersTable.cs" />
     <Compile Include="002_CreateRolesTableAndRelationshipWithUsers.cs" />
+    <Compile Include="003_AddUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
