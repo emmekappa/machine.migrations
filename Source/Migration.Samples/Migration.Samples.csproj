@@ -50,9 +50,8 @@
   <ItemGroup>
     <Compile Include="001_CreateUsersTable.cs" />
     <Compile Include="002_CreateRolesTableAndRelationshipWithUsers.cs" />
-    <Compile Include="003_AddUser.cs" />
-    <Compile Include="004_RenameUsersToProfiles.cs" />
-    <Compile Include="005_RenameUsersIdColumn.cs" />
+    <Compile Include="003_RenameUsersToProfiles.cs" />
+    <Compile Include="004_RenameUsersIdColumn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
