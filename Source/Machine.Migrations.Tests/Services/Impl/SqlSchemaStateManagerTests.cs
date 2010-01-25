@@ -81,7 +81,7 @@ namespace Machine.Migrations.Services.Impl
       using (_mocks.Record())
       {
         SetupResult.For(_databaseProvider.ExecuteNonQuery(
-          "DELETE FROM {0} WHERE {1} = {2} AND {3} IS NULL",
+		  "DELETE FROM \"{0}\" WHERE \"{1}\" = {2} AND \"{3}\" IS NULL",
           "schema_info", "version", version, "scope")).Return(true);
       }
       _target.SetMigrationVersionUnapplied(version, null);
@@ -95,7 +95,7 @@ namespace Machine.Migrations.Services.Impl
       using (_mocks.Record())
       {
         SetupResult.For(_databaseProvider.ExecuteNonQuery(
-          "DELETE FROM {0} WHERE {1} = {2} AND {3} = '{4}'",
+		  "DELETE FROM \"{0}\" WHERE \"{1}\" = {2} AND \"{3}\" = '{4}'",
           "schema_info", "version", version, "scope", "core")).Return(true);
       }
       _target.SetMigrationVersionUnapplied(version, "core");

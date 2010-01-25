@@ -46,7 +46,7 @@ namespace Machine.Migrations.SchemaProviders
 			using (Log4NetNdc.Push("AddTable"))
 			{
 				var sb = new StringBuilder();				
-				sb.Append(Format("CREATE TABLE {0}", table)).Append(" (");
+				sb.Append("CREATE TABLE " + Escape(table)).Append(" (");
 				bool first = true;
 				foreach (Column column in columns)
 				{
@@ -71,7 +71,10 @@ namespace Machine.Migrations.SchemaProviders
 
 		public void DropTable(string table)
 		{
-			_databaseProvider.ExecuteNonQuery("DROP TABLE {0}", table);
+			using (Log4NetNdc.Push("DropTable({0})", table))
+			{
+				_databaseProvider.ExecuteNonQuery("DROP TABLE {0}", Escape(table));
+			}
 		}
 
 		public virtual bool HasTable(string table)
@@ -91,7 +94,7 @@ namespace Machine.Migrations.SchemaProviders
 
 		public void AddColumn(string table, string column, Type type, short size, bool isPrimaryKey, bool allowNull)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" ADD {1}", table,
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} ADD {1}", Escape(table),
 			                                  ColumnToCreateTableSql(new Column(column, type, size, isPrimaryKey, allowNull)));
 		}
 
@@ -107,7 +110,10 @@ namespace Machine.Migrations.SchemaProviders
 
 		public void RemoveColumn(string table, string column)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP COLUMN \"{1}\"", table, column);
+			using (Log4NetNdc.Push("RemoveColumn({0}.{1}) ", table, column))
+			{
+				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP COLUMN {1}", Escape(table), Escape(column));
+			}
 		}
 
 		public void RenameTable(string table, string newName)
@@ -182,12 +188,14 @@ namespace Machine.Migrations.SchemaProviders
 			}
 		}
 
-		public void AddForeignKeyConstraint(string table, string name, string column, string foreignTable,
-		                                    string foreignColumn)
+		public void AddForeignKeyConstraint(string table, string name, string column, string foreignTable, string foreignColumn)
 		{
-			_databaseProvider.ExecuteNonQuery(
-				"ALTER TABLE \"{0}\" ADD CONSTRAINT \"{1}\" FOREIGN KEY (\"{2}\") REFERENCES \"{3}\" (\"{4}\")", table, name, column,
-				foreignTable, foreignColumn);
+			using (Log4NetNdc.Push("AddForeignKeyConstraint({0}.{1})", table, name))
+			{
+				_databaseProvider.ExecuteNonQuery(
+					"ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3} ({4})", 
+					Escape(table), Escape(name), Escape(column), Escape(foreignTable), Escape(foreignColumn));
+			}
 		}
 
 		public void AddUniqueConstraint(string table, string name, params string[] columns)
@@ -209,7 +217,10 @@ namespace Machine.Migrations.SchemaProviders
 
 		public void DropConstraint(string table, string name)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" DROP CONSTRAINT \"{1}\"", table, name);
+			using (Log4NetNdc.Push("DropConstraint({0}.{1})", table, name))
+			{
+				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP CONSTRAINT {1}", Escape(table), Escape(name));
+			}
 		}
 
 		#endregion
@@ -294,12 +305,6 @@ namespace Machine.Migrations.SchemaProviders
 		public string Escape(string name)
 		{
 			return "\"" + name.Trim('\"') + "\"";
-		}
-
-		public string Format(string format, params object[] objects)
-		{
-			string[] values = objects.Select(x => "\"" + x.ToString() + "\"").ToArray();
-			return string.Format(format, values);
 		}
 	}
 }
