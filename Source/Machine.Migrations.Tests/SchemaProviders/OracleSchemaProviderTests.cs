@@ -21,8 +21,8 @@ namespace Machine.Migrations.SchemaProviders
 		public void RenameTable_should_generate_a_valid_DDL_statement()
 		{
 			oracleSchemaProvider.RenameTable("TableName", "NewTableName");
-			databaseProviderStub.AssertWasCalled(x => 
-				x.ExecuteNonQuery("ALTER TABLE \"{0}\" RENAME TO \"{1}\"", "TableName", "NewTableName"));
+			databaseProviderStub.AssertWasCalled(x =>
+				x.ExecuteNonQuery("ALTER TABLE {0} RENAME TO {1}", "\"TableName\"", "\"NewTableName\""));
 		}
 
 		[Test]
@@ -30,7 +30,7 @@ namespace Machine.Migrations.SchemaProviders
 		{
 			oracleSchemaProvider.RenameColumn("TableName", "ColumnName", "NewColumnName");
 			databaseProviderStub.AssertWasCalled(x =>
-				x.ExecuteNonQuery("ALTER TABLE \"{0}\" RENAME COLUMN \"{1}\" TO \"{2}\"", "TableName", "ColumnName", "NewColumnName"));
+				x.ExecuteNonQuery("ALTER TABLE {0} RENAME COLUMN {1} TO {2}", "\"TableName\"", "\"ColumnName\"", "\"NewColumnName\""));
 		}
 	}
 }

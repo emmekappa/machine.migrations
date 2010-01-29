@@ -36,7 +36,10 @@ namespace Machine.Migrations.ConsoleRunner
     public int CommandTimeout = 60;
 
 	[Option(null, "database", HelpText = "Database type to use \"SqlServer\" or \"Oracle\"")]
-  	public string Database = "SqlServer";  	
+  	public string Database = "SqlServer";
+
+	[Option("a", "driverAssemblyName", HelpText = "The driver assembly name")]
+	public string DriverAssemblyName;
 
   	[HelpOption("?", "help", HelpText = "Display this help screen")]
     public string GetUsage()

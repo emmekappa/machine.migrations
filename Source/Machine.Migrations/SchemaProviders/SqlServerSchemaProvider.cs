@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 
 using Machine.Migrations.DatabaseProviders;
@@ -248,6 +249,23 @@ namespace Machine.Migrations.SchemaProviders
       }
       return null;
     }
+      
+	public void AddIndex(string table, string indexName, bool isUnique, bool recomputeStatistics, params string[] columns)
+	{
+		if (columns.Length == 0)
+			throw new ArgumentException("AddIndex requires at least one column name", "columns");
+
+		string unique = isUnique ? "UNIQUE" : "";
+		string statistics = recomputeStatistics ? "WITH (STATISTICS_NORECOMPUTE = ON)" : "WITH (STATISTICS_NORECOMPUTE = OFF)";
+		List<string> cols = new List<string>();
+		columns.ToList().ForEach(x => cols.Add("\"" + (x.Trim()) + "\""));
+		_databaseProvider.ExecuteNonQuery("CREATE {0} INDEX {1} ON {2} ({3}) {4}", unique, indexName, table, string.Join(",", cols.ToArray()), statistics);
+	}
+
+	public void DropIndex(string table, string indexName)
+	{
+		_databaseProvider.ExecuteNonQuery("DROP INDEX {0}.{1}", table, indexName );
+	}
 
 	public virtual string ToDataBaseType(ColumnType type, int size)
     {

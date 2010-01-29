@@ -27,5 +27,7 @@ namespace Machine.Migrations.SchemaProviders
     void DropConstraint(string table, string name);
     bool IsColumnOfType(string table, string column, string type);
   	string ToDataBaseType(ColumnType type, int size);
+	void AddIndex(string table, string indexName, bool isUnique, bool recomputeStatistics, params string[] columns);
+  	void DropIndex(string table, string indexName);
   }
 }

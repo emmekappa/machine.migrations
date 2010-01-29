@@ -42,8 +42,9 @@ namespace Machine.Migrations
     bool _diagnostics;
     string[] _references;
     string _compilerVersion;
+  	private string _driverAssemblyName;
 
-    public MigratorTask()
+  	public MigratorTask()
     {
       _migrationsDirectory = Environment.CurrentDirectory;
     }
@@ -154,6 +155,11 @@ namespace Machine.Migrations
     {
       get { return typeof(SqlServerDatabaseProvider); }
     }
+	public string DriverAssemblyName
+	{
+		get { return _driverAssemblyName; }
+		set { _driverAssemblyName = value; }
+	}
     #endregion
   }
 }

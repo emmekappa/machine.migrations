@@ -71,6 +71,7 @@ namespace Machine.Migrations.ConsoleRunner
 		public Configuration(Options options)
 		{
 			Scope = options.Scope;
+			DriverAssemblyName = options.DriverAssemblyName;
 			setDatabaseOptions(options);			
 			MigrationsDirectory = options.MigrationsDirectory;
 			CompilerVersion = options.CompilerVersion;
@@ -89,6 +90,7 @@ namespace Machine.Migrations.ConsoleRunner
 		public Type SchemaProviderType { get; set; }
 		public Type DatabaseProviderType { get; set; }
 		public string ActiveConfigurationKey { get; set; }
+		public string DriverAssemblyName { get; set; }
 
 		public string ConnectionStringByKey(string key)
 		{

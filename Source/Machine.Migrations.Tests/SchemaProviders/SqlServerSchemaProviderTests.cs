@@ -89,7 +89,7 @@ namespace Machine.Migrations.SchemaProviders
       }
       Column[] columns = new Column[]
       {
-        new Column("Id", typeof(Int32), 4, true) {IsIdentity = false},
+        new Column("Id", typeof(Int32), 4, true) {IsIdentity = false, IsNative = false},
       };
       _target.AddTable("TheTable", columns);
     }
@@ -122,7 +122,7 @@ namespace Machine.Migrations.SchemaProviders
       }
       Column[] columns = new Column[]
       {
-        new Column("Id", typeof(Int32), 4, true) {IsIdentity = false},
+        new Column("Id", typeof(Int32), 4, true) {IsIdentity = false, IsNative = false},
         new Column("Name", typeof(String), 0),
       };
       _target.AddTable("TheTable", columns);
@@ -139,7 +139,7 @@ namespace Machine.Migrations.SchemaProviders
       }
       Column[] columns = new Column[]
       {
-        new Column("Id", typeof(Int32), 4, true) {IsIdentity = false},
+        new Column("Id", typeof(Int32), 4, true) {IsIdentity = false, IsNative = false},
         new Column("Name", typeof(String), 100),
       };
       _target.AddTable("TheTable", columns);
@@ -190,5 +190,18 @@ namespace Machine.Migrations.SchemaProviders
       }
       _target.AddUniqueConstraint("TheTable", "UniqueKeyName", "Name", "Email", "Key");
     }
+
+	[Test]
+	public void AddIndex_Always_HandlesMultipleColumns()
+	{
+		using (_mocks.Record())
+		{
+			SetupResult.For(_databaseProvider.ExecuteNonQuery(
+			  "CREATE {0} INDEX {1} ON {2} ({3}) {4}",
+			  "UNIQUE", "IndexName", "TheTable", "\"Name\",\"LastName\"", "WITH (STATISTICS_NORECOMPUTE = ON)"))
+			.Return(true);
+		}
+		_target.AddIndex("TheTable", "IndexName", true, true, "Name", "LastName");
+	}
   }
 }

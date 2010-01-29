@@ -21,7 +21,9 @@ namespace Machine.Migrations.Services.Impl
     string[] _references = new string[0];
     int _commandTimeout = 30;
     string _key;
-    #endregion
+  	private string _driverAssemblyName;
+
+  	#endregion
 
     #region StaticMigratorConfiguration()
     public StaticMigratorConfiguration()
@@ -143,5 +145,11 @@ namespace Machine.Migrations.Services.Impl
       get { return typeof(TransactionProvider); }
     }
     #endregion
+
+	public string DriverAssemblyName
+	{
+		get { return _driverAssemblyName; }
+		set { _driverAssemblyName = value; }
+	}
   }
 }

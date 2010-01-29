@@ -46,7 +46,7 @@ namespace Machine.Migrations.SchemaProviders
 			using (Log4NetNdc.Push("AddTable"))
 			{
 				var sb = new StringBuilder();				
-				sb.Append("CREATE TABLE " + Escape(table)).Append(" (");
+				sb.Append("CREATE TABLE " + quote(table)).Append(" (");
 				bool first = true;
 				foreach (Column column in columns)
 				{
@@ -62,11 +62,12 @@ namespace Machine.Migrations.SchemaProviders
 
 					if (column.IsSequence || column.IsNative)
 					{
-						var sequenceName = string.IsNullOrEmpty(column.SequenceName) ? "SEQ_" + table : column.SequenceName;
+						var sequenceName = string.IsNullOrEmpty(column.SequenceName) ? "SEQ_" + table.ToUpper() : column.SequenceName;
 						if (sequenceName.Length > 30)
-							sequenceName = sequenceName.Substring(0, 29);
-						if (_databaseProvider.ExecuteScalar<Decimal>("SELECT COUNT(*) FROM SEQ WHERE SEQUENCE_NAME = '{0}'", sequenceName) == 0)
-							_databaseProvider.ExecuteNonQuery("CREATE SEQUENCE \"{0}\" MINVALUE 1 START WITH 1 INCREMENT BY 1", sequenceName);
+							sequenceName = sequenceName.Substring(0, 29);						
+							if (
+								_databaseProvider.ExecuteScalar<Decimal>("SELECT COUNT(*) FROM SEQ WHERE SEQUENCE_NAME = '{0}'", sequenceName) == 0)
+								_databaseProvider.ExecuteNonQuery("CREATE SEQUENCE {0} MINVALUE 1 START WITH 1 INCREMENT BY 1", quote(sequenceName));
 					}
 
 					string sql = ColumnToConstraintsSql(table, column);
@@ -85,7 +86,7 @@ namespace Machine.Migrations.SchemaProviders
 		{
 			using (Log4NetNdc.Push("DropTable({0})", table))
 			{
-				_databaseProvider.ExecuteNonQuery("DROP TABLE {0}", Escape(table));
+				_databaseProvider.ExecuteNonQuery("DROP TABLE {0}", quote(table));
 			}
 		}
 
@@ -104,12 +105,6 @@ namespace Machine.Migrations.SchemaProviders
 			AddColumn(table, column, type, -1, false, false);
 		}
 
-		public void AddColumn(string table, string column, Type type, short size, bool isPrimaryKey, bool allowNull)
-		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} ADD {1}", Escape(table),
-			                                  ColumnToCreateTableSql(new Column(column, type, size, isPrimaryKey, allowNull)));
-		}
-
 		public void AddColumn(string table, string column, Type type, bool allowNull)
 		{
 			AddColumn(table, column, type, 0, false, allowNull);
@@ -120,22 +115,60 @@ namespace Machine.Migrations.SchemaProviders
 			AddColumn(table, column, type, size, false, allowNull);
 		}
 
+		public void AddColumn(string table, string column, Type type, short size, bool isPrimaryKey, bool allowNull)
+		{
+			try
+			{
+				addColumnInternal(table, column, type, size, isPrimaryKey, allowNull);
+			}
+			catch (Exception e)
+			{
+				if (tableNotFound(e))
+				{
+					addColumnInternal(quote(table), column, type, size, isPrimaryKey, allowNull);
+					return;
+				}
+				throw;
+			}
+		}
+
+		private bool tableNotFound(Exception e)
+		{
+			if (e.InnerException.GetType().Name.Equals("OracleException"))
+				if (e.InnerException.Message.Contains("ORA-00942"))
+					return true;
+			return false;
+		}
+
+		public void addColumnInternal(string table, string column, Type type, short size, bool isPrimaryKey, bool allowNull)
+		{
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} ADD {1}", table,
+											  ColumnToCreateTableSql(new Column(column, type, size, isPrimaryKey, allowNull)));
+		}
+
 		public void RemoveColumn(string table, string column)
 		{
 			using (Log4NetNdc.Push("RemoveColumn({0}.{1}) ", table, column))
 			{
-				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP COLUMN {1}", Escape(table), Escape(column));
+				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP COLUMN {1}", quote(table), quote(column));
 			}
 		}
 
 		public void RenameTable(string table, string newName)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" RENAME TO \"{1}\"", table, newName);
+			using (Log4NetNdc.Push("RenameTable({0}.{1}) ", table, newName))
+			{
+				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} RENAME TO {1}", quote(table), quote(newName));
+			}
 		}
 
 		public void RenameColumn(string table, string column, string newName)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" RENAME COLUMN \"{1}\" TO \"{2}\"", table, column, newName);
+			using (Log4NetNdc.Push("RenameTable({0}.{1}) ", table, newName))
+			{
+				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} RENAME COLUMN {1} TO {2}",
+				                                  quote(table), quote(column), quote(newName));
+			}
 		}
 
 		public void AddSchema(string schemaName)
@@ -177,7 +210,7 @@ namespace Machine.Migrations.SchemaProviders
 
 		public void ChangeColumn(string table, string column, Type type, short size, bool allowNull)
 		{
-			_databaseProvider.ExecuteNonQuery("ALTER TABLE \"{0}\" MODIFY {1}", table,
+			_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} MODIFY {1}", quote(table),
 			                                  ColumnToCreateTableSql(new Column(column, type, size, false, allowNull)));
 		}
 
@@ -206,7 +239,7 @@ namespace Machine.Migrations.SchemaProviders
 			{
 				_databaseProvider.ExecuteNonQuery(
 					"ALTER TABLE {0} ADD CONSTRAINT {1} FOREIGN KEY ({2}) REFERENCES {3} ({4})", 
-					Escape(table), Escape(name), Escape(column), Escape(foreignTable), Escape(foreignColumn));
+					quote(table), quote(name), quote(column), quote(foreignTable), quote(foreignColumn));
 			}
 		}
 
@@ -220,18 +253,39 @@ namespace Machine.Migrations.SchemaProviders
 			{
 				if (colList.Length != 0)
 					colList += ", ";
-				colList += "\"" + column + "\" ASC";
+				colList += "\"" + column + "\" ";
 			}
 
 			_databaseProvider.ExecuteNonQuery(
-				"ALTER TABLE \"{0}\" ADD CONSTRAINT \"{1}\" UNIQUE NONCLUSTERED ({2})", table, name, colList);
+				"ALTER TABLE {0} ADD CONSTRAINT {1} UNIQUE ({2})", quote(table), quote(name), colList);
 		}
 
 		public void DropConstraint(string table, string name)
 		{
 			using (Log4NetNdc.Push("DropConstraint({0}.{1})", table, name))
 			{
-				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP CONSTRAINT {1}", Escape(table), Escape(name));
+				_databaseProvider.ExecuteNonQuery("ALTER TABLE {0} DROP CONSTRAINT {1}", quote(table), quote(name));
+			}
+		}
+
+		public void AddIndex(string table, string indexName, bool isUnique, bool recomputeStatistics, params string[] columns)
+		{
+			if (columns.Length == 0)
+				throw new ArgumentException("AddIndex requires at least one column name", "columns");
+
+			string unique = isUnique ? "UNIQUE" : "";
+			string statistics = recomputeStatistics ? " COMPUTE STATISTICS " : "";
+			List<string> cols = new List<string>();
+			columns.ToList().ForEach(x => cols.Add(quote(x.Trim())));
+			_databaseProvider.ExecuteNonQuery("CREATE {0} INDEX {1} ON {2} ({3}) {4}", 
+				unique, quote(indexName), quote(table), string.Join(",", cols.ToArray()), statistics);
+		}
+
+		public void DropIndex(string table, string indexName)
+		{
+			using (Log4NetNdc.Push("DropIndex({0})", indexName))
+			{
+				_databaseProvider.ExecuteNonQuery("DROP INDEX {0}", quote(indexName));
 			}
 		}
 
@@ -314,7 +368,7 @@ namespace Machine.Migrations.SchemaProviders
 
 		#endregion
 
-		public string Escape(string name)
+		private string quote(string name)
 		{
 			return "\"" + name.Trim('\"') + "\"";
 		}

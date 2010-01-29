@@ -35,5 +35,7 @@ namespace Machine.Migrations.Services
 		string ConnectionStringByKey(string key);
 
 		void SetCommandTimeout(int commandTimeout);
+
+		string DriverAssemblyName { get;  }
 	}
 }
