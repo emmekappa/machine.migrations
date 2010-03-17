@@ -259,7 +259,7 @@ namespace Machine.Migrations.SchemaProviders
 		string statistics = recomputeStatistics ? "WITH (STATISTICS_NORECOMPUTE = ON)" : "WITH (STATISTICS_NORECOMPUTE = OFF)";
 		List<string> cols = new List<string>();
 		columns.ToList().ForEach(x => cols.Add("\"" + (x.Trim()) + "\""));
-		_databaseProvider.ExecuteNonQuery("CREATE {0} INDEX {1} ON {2} ({3}) {4}", unique, indexName, table, string.Join(",", cols.ToArray()), statistics);
+		_databaseProvider.ExecuteNonQuery("CREATE {0} INDEX [{1}] ON [{2}] ({3}) {4}", unique, indexName, table, string.Join(",", cols.ToArray()), statistics);
 	}
 
 	public void DropIndex(string table, string indexName)

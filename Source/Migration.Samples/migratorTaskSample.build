@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--EXTERNAL_PROPERTIES: connectionString-->
+<project name="Migration" default="migrate" basedir="." xmlns="http://nant.sf.net/release/0.86/nant.xsd" >
+
+	<target name="migrate" description="Migration script">
+
+		<loadtasks assembly="..\..\Build\Debug\Migrations\Machine.Migrations.Tasks.dll"  />
+
+		<echo message="" />
+		<echo message="********** Start Migration script ************" />
+		<echo message="" />
+
+		<migrator
+				compilerVersion="v3.5"
+				migrationsDirectory="C:\Users\gierim.CRUISENET\LAVORO\machine.migrations\Source\Migration.Samples"
+				database="oracle"
+				connectionString="Data Source=ORCL;User ID=documentazione;Password=pwddocumentazione"
+				driverAssemblyName="Oracle.DataAccess, Version=2.111.6.0, Culture=neutral, PublicKeyToken=89b483f429c47342"/>		
+
+		<!--<migrator
+				compilerVersion="v3.5"
+				migrationsDirectory="C:\Users\gierim.CRUISENET\LAVORO\machine.migrations\Source\Migration.Samples"
+				database="sqlserver"
+				connectionString="Data Source=.;Initial Catalog=DocumentazioneENITests;Integrated Security=SSPI"
+				toVersion="1">
+		</migrator>-->
+
+		<echo message="" />
+		<echo message="********** End Migration script ************" />
+		<echo message="" />
+	</target>
+	
+</project>

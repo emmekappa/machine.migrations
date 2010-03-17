@@ -84,6 +84,7 @@
     <Compile Include="DatabaseProviders\IDatabaseProvider.cs" />
     <Compile Include="DatabaseProviders\OracleDatabaseProvider.cs" />
     <Compile Include="DatabaseProviders\SqlServerDatabaseProvider.cs" />
+    <Compile Include="DetectDataBase.cs" />
     <Compile Include="DuplicateMigrationVersionException.cs" />
     <Compile Include="FluentMigration.cs" />
     <Compile Include="IDatabaseMigration.cs" />

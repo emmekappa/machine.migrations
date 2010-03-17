@@ -4,8 +4,6 @@ using System.Linq;
 using log4net.Appender;
 using log4net.Config;
 using log4net.Layout;
-using Machine.Migrations.DatabaseProviders;
-using Machine.Migrations.SchemaProviders;
 using Machine.Migrations.Services;
 using Machine.Migrations.Services.Impl;
 
@@ -125,24 +123,8 @@ namespace Machine.Migrations.ConsoleRunner
 		private void setDatabaseOptions(Options options)
 		{
 			TransactionProviderType = typeof (TransactionProvider);
-			switch (options.Database.ToLower())
-			{
-				case "sqlserver":
-					ConnectionProviderType = typeof (SqlServerConnectionProvider);
-					SchemaProviderType = typeof (SqlServerSchemaProvider);
-					DatabaseProviderType = typeof (SqlServerDatabaseProvider);
-					SchemaStateManager = typeof (SqlServerSchemaStateManager);
-					break;
 
-				case "oracle":
-					ConnectionProviderType = typeof(OracleConnectionProvider);					
-					SchemaProviderType = typeof(OracleSchemaProvider);
-					DatabaseProviderType = typeof(OracleDatabaseProvider);
-					SchemaStateManager = typeof(OracleSchemaStateManager);
-					break;
-				default:
-					throw new ArgumentException("Supported type are SqlServer or Oracle");
-			}
+			DetectDataBase.Detect(this, options.Database.ToLower());
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using Machine.Container;
-
 using Machine.Core.Utility;
 using Machine.Migrations.DatabaseProviders;
 using Machine.Migrations.SchemaProviders;
@@ -126,10 +125,11 @@ namespace Machine.Migrations
       set { _commandTimeout = value; }
     }
 
-  	public Type SchemaStateManager
-  	{
-		get { return typeof (SqlServerSchemaStateManager); }  		
-  	}
+	public Type SchemaStateManager
+	{
+		get { return typeof(SqlServerSchemaStateManager); }
+		set { } 
+	}
 
   	public void SetCommandTimeout(int commandTimeout)
     {
@@ -139,7 +139,8 @@ namespace Machine.Migrations
     public virtual Type ConnectionProviderType
     {
       get { return typeof(SqlServerConnectionProvider); }
-    }
+	  set { }
+	}
 
     public virtual Type TransactionProviderType
     {
@@ -149,11 +150,13 @@ namespace Machine.Migrations
     public virtual Type SchemaProviderType
     {
       get { return typeof(SqlServerSchemaProvider); }
-    }
+	  set { }
+	}
 
     public virtual Type DatabaseProviderType
     {
       get { return typeof(SqlServerDatabaseProvider); }
+	  set { } 
     }
 	public string DriverAssemblyName
 	{

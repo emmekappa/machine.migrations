@@ -6,13 +6,13 @@ namespace Machine.Migrations.Services
 	{
 		string Scope { get; }
 
-		Type ConnectionProviderType { get; }
+		Type ConnectionProviderType { get; set; }
 
 		Type TransactionProviderType { get; }
 
-		Type SchemaProviderType { get; }
+		Type SchemaProviderType { get; set; }
 
-		Type DatabaseProviderType { get; }
+		Type DatabaseProviderType { get; set; }
 
 		string ConnectionString { get; }
 
@@ -30,7 +30,7 @@ namespace Machine.Migrations.Services
 
 		int CommandTimeout { get; }
 
-		Type SchemaStateManager { get; }
+		Type SchemaStateManager { get; set; }
 
 		string ConnectionStringByKey(string key);
 

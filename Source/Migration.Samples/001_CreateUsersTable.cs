@@ -20,8 +20,12 @@ public class CreateUsersTable : FluentMigration
 		//SimpleSchema.AddUniqueConstraint("Users", "Name", "Name");
 		//SimpleSchema.DropConstraint("Users", "Name");
 		//SimpleSchema.DropTable("Users");
-		SimpleSchema.AddIndex("Users", "Users", true, true, "Name", "LastName");
-		//SimpleSchema.DropIndex("Users", "Users");
+
+		SimpleSchema.AddIndex("Users", "Name", true, true, "Name");
+		SimpleSchema.AddIndex("Users", "Name&LastName", true, true, "Name", "LastName");
+
+		//SimpleSchema.DropIndex("Users", "Name");
+		//SimpleSchema.DropIndex("Users", "Name&LastName");
 	}
 
 	public override void Down()

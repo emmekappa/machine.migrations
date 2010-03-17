@@ -93,6 +93,7 @@ namespace Machine.Migrations.Services.Impl
   	public Type SchemaStateManager
   	{
 		get { return _schemaStateManager; }
+		set { } 
   	}
 
   	public string ConnectionStringByKey(string key)
